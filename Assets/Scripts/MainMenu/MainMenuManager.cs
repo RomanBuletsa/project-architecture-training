@@ -1,4 +1,5 @@
 ﻿using System;
+using Application;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,28 +10,23 @@ namespace MainMenu
     {
         public event Action ButtonClicked;
         
-        [SerializeField] private Button GameButton;
+        [SerializeField] private Button gameButton;
         
         
         private void Awake()
         {
+            ApplicationManager.Instance.MainMenuManager = this;
+            
             DontDestroyOnLoad(this);
 			
-            GameButton.onClick.AddListener(OnSomeButtonClicked);
-
-            ButtonClicked += OnButtonClicked;
-        }
-        
-        
-        private void OnButtonClicked()
-        {
-            SceneManager.LoadScene("Game", LoadSceneMode.Single);
-            
+            gameButton.onClick.AddListener(OnSomeButtonClicked);
         }
         
         private void OnSomeButtonClicked() => ButtonClicked?.Invoke();
         
-        private void OnDestroy() => ButtonClicked -= OnButtonClicked;
-        
+        private void OnDestroy()
+        {
+            ApplicationManager.Instance.MainMenuManager = null;
+        }
     }
 }

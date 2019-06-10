@@ -8,7 +8,9 @@ namespace Application
 {
     public class ApplicationManager : MonoBehaviour
     {
-        public MainMenuManager MainMenuManager { get; }
+        public static ApplicationManager Instance { get; private set; }
+        
+        public MainMenuManager MainMenuManager { get; set;  }
 
         private void Awake()
         {

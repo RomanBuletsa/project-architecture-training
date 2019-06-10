@@ -10,11 +10,11 @@ namespace Game
     {
         public event Action MenuButtonClicked;
         public event Action ChangeButtonClicked;
+        
         [SerializeField] private Image Image;
         
         [SerializeField] private Button MenuButton;
         [SerializeField] private Button ChangeButton;
-        private Random rnd = new Random();
         
         private void Awake()
         {
@@ -39,11 +39,15 @@ namespace Game
         
         private void OnButtonChangeClicked()
         {
-            //Color randomColor = Color.FromArgb(rnd.Next(256), rnd.Next(256), rnd.Next(256));
+            Color randomColor = GetRandomColor();
             if(Image.color==Color.blue) Image.color = Color.red;
             else Image.color = Color.blue;
             
         }
+
+        private static Color GetRandomColor() =>
+            new Color(UnityEngine.Random.Range(0f, 1f), UnityEngine.Random.Range(0f, 1f),
+                UnityEngine.Random.Range(0f, 1f));
 
         private void OnMenuButtonClicked()
         {
