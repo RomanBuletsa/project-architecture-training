@@ -8,22 +8,31 @@ namespace MainMenu
 {
     public class MainMenuManager : MonoBehaviour
     {
-        public event Action ButtonClicked;
-        
+
         [SerializeField] private Button gameButton;
-        
+        [SerializeField] private Dropdown dropdown;
+        [SerializeField] private String[] scanes;
         
         private void Awake()
         {
             ApplicationManager.Instance.MainMenuManager = this;
             
-            DontDestroyOnLoad(this);
+            ApplicationManager.Instance.SelectedGameScene = scanes[0];
 			
             gameButton.onClick.AddListener(OnSomeButtonClicked);
+
+            dropdown.onValueChanged.AddListener(delegate {
+                DropdownValueChanged(dropdown);
+            });
         }
         
-        private void OnSomeButtonClicked() => ButtonClicked?.Invoke();
-        
+        private void OnSomeButtonClicked() => SceneManager.LoadScene("Game");
+
+        private void DropdownValueChanged(Dropdown change)
+        {
+            ApplicationManager.Instance.SelectedGameScene = scanes[change.value];
+        }
+
         private void OnDestroy()
         {
             ApplicationManager.Instance.MainMenuManager = null;

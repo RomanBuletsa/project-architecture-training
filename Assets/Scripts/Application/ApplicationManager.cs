@@ -1,4 +1,5 @@
 ﻿using System;
+using Game;
 using MainMenu;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
@@ -9,13 +10,32 @@ namespace Application
     public class ApplicationManager : MonoBehaviour
     {
         public static ApplicationManager Instance { get; private set; }
+        public MainMenuManager MainMenuManager { get; set; }
+        public GameManager GameManager { get; set; }
+        public String SelectedGameScene  { get; set; }
         
-        public MainMenuManager MainMenuManager { get; set;  }
+        public enum ApplicationScenes
+        {
+            Application,
+            MainMenu,
+            Game
+        }
+        
 
         private void Awake()
         {
             DontDestroyOnLoad(this);
-            SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+            Instance = this;
         }
+        
+        private void Start()
+        {
+            SceneManager.LoadScene(ApplicationScenes.MainMenu.ToString());
+        }
+        
+        
+        
+        
+        
     }
 }
