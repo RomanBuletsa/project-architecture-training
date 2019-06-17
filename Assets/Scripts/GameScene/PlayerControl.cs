@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour
 {
-    public float tap=2000;
+    [SerializeField] private float tap=2000;
     
     private bool jump;
     private float rotation;
@@ -29,7 +29,8 @@ public class PlayerControl : MonoBehaviour
     {
         if (jump)
         {
-            _rigidbody2D.AddForce(Vector2.up*tap*3.5f,ForceMode2D.Force);
+            _rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.AddForce(Vector2.up*tap*2f,ForceMode2D.Force);
             rotation += 0.2f;
             rotation = Math.Min(rotation, 0.2f);
             jump = false;

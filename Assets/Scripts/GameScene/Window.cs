@@ -6,9 +6,9 @@ namespace GameScene
 {
     public class Window : MonoBehaviour
     {
-        void OnTriggerExit2D(Collider2D  col)
+/*        void OnTriggerExit2D(Collider2D  col)
         {
             transform.parent.GetComponent<Wall>().TriggerExit2D();
-        }
+        }*/
     }
 }
