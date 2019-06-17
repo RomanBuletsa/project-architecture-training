@@ -13,26 +13,17 @@ namespace Game
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance { get; private set; }
         public GameSceneManager GameSceneManager { get; set; }
-        
-        public enum ApplicationScenes
-        {
-            Application,
-            MainMenu,
-            Game
-        }
-        
+
         [SerializeField] private Button menuButton;
         [SerializeField] private Button startButton;
-        [SerializeField] private GameObject bestText;
-        [SerializeField] private GameObject lastText;
+        [SerializeField] private Text bestText;
+        [SerializeField] private Text lastText;
         private float spawnRate = 2.5f;
         private int currentCount;
          
         private void Awake()
         {
-            Instance = this;
             DontDestroyOnLoad(this);
             ApplicationManager.Instance.GameManager = this;
             
@@ -51,22 +42,26 @@ namespace Game
         private void OnStartButtonClicked()
         { 
             SceneManager.LoadScene(ApplicationManager.Instance.SelectedGameScene);
-            StartGame();
-
         }
 
         private void OnEnable()
         {
             int bestresult = PlayerPrefs.GetInt("Best",0);
-            bestText.GetComponent<Text>().text = $"Best {bestresult}";
+            bestText.text = $"Best {bestresult}";
             
             int lastresult = PlayerPrefs.GetInt("Last",0);
-            lastText.GetComponent<Text>().text = $"Last {lastresult}";
+            lastText.text = $"Last {lastresult}";
         }
 
         private void UpdateText()
         {
-            GameSceneManager.Count.GetComponent<Text>().text = $"{currentCount}";
+            GameSceneManager.CountText.text = $"{currentCount}";
+        }
+        
+        public void RegisterGameSceneManager(GameSceneManager gameSceneManager)
+        {
+            GameSceneManager = gameSceneManager;
+            StartGame();
         }
 
         private void StartGame()
@@ -76,17 +71,16 @@ namespace Game
         
         private IEnumerator SpawnCoroutine()
         {
-            yield return new WaitForSeconds(.1f);
             var timeElapsed = spawnRate;
             while (true)
             {
                 if (timeElapsed > spawnRate)
                 {
                     timeElapsed = 0f;
-                    var newWall = Instantiate(GameSceneManager.WallPrefab,GameSceneManager.Position.transform);
-                    newWall.transform.parent = GameSceneManager.Parent.transform;
-                    newWall.GetComponent<Wall>().WallCollision += OnWallCollision;
-                    newWall.GetComponent<Wall>().WallPassed += OnWallPassed;
+                    var newWall = Instantiate(GameSceneManager.WallPrefab,GameSceneManager.Position);
+                    newWall.transform.parent = GameSceneManager.Parent;
+                    newWall.WallCollision += OnWallCollision;
+                    newWall.WallPassed += OnWallPassed;
                 }
 
                 timeElapsed += Time.deltaTime;

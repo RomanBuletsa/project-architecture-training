@@ -26,7 +26,7 @@ namespace MainMenu
             });
         }
         
-        private void OnSomeButtonClicked() => SceneManager.LoadScene("Game");
+        private void OnSomeButtonClicked() => SceneManager.LoadScene(ApplicationScenes.Game.ToString());
 
         private void DropdownValueChanged(Dropdown change)
         {
