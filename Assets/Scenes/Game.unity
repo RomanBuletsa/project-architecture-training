@@ -793,8 +793,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuButton: {fileID: 1312017568}
   startButton: {fileID: 760161085}
-  bestText: {fileID: 69084740}
-  lastText: {fileID: 833487800}
+  bestText: {fileID: 69084742}
+  lastText: {fileID: 833487802}
 --- !u!4 &1377495139
 Transform:
   m_ObjectHideFlags: 0

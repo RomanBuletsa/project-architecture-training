@@ -1,33 +1,31 @@
-﻿using System;
+﻿
 using Application;
 using Game;
-using MainMenu;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace GameScene
 {
     public class GameSceneManager : MonoBehaviour
     {
         
-        [SerializeField] private  GameObject parent;
-        [SerializeField] private  GameObject position;
-        [SerializeField] private  GameObject count;
-        [SerializeField] private  GameObject wallPrefab;
+        [SerializeField] private  Transform parent;
+        [SerializeField] private  Transform position;
+        [SerializeField] private  Text countText;
+        [SerializeField] private  Wall wallPrefab;
 
-        public GameObject WallPrefab => wallPrefab;
-        public GameObject Parent => parent;
-        public GameObject Position => position;
-        public GameObject Count => count;
+        public Wall WallPrefab => wallPrefab;
+        public Transform Parent => parent;
+        public Transform Position => position;
+        public Text CountText => countText;
         
         
         private void Awake(){
-            GameManager.Instance.GameSceneManager = this;
+            ApplicationManager.Instance.GameManager.RegisterGameSceneManager(this);
         }
         
         private void OnDestroy()
         {
-            GameManager.Instance.GameSceneManager = null;
         } 
         
         
