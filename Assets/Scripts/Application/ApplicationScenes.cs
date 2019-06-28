@@ -7,6 +7,7 @@
         Game,
         GameScene1,
         GameScene2,
-        GameScene3
+        GameScene3,
+        Market
     }
 }
